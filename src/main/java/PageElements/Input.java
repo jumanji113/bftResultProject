@@ -3,6 +3,9 @@ package PageElements;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
+import org.openqa.selenium.Keys;
+
+import java.io.File;
 
 import static com.codeborne.selenide.Selenide.$x;
 
@@ -22,9 +25,20 @@ public class Input {
         return this;
     }
 
+    public Input sendConfirmValue() {
+        input.sendKeys(Keys.ENTER);
+        return this;
+    }
+
     @Step("Проверка, что input имеет атрибут {attribute} со значением {value}")
     public Input shouldHaveAttribute(String attribute, String value) {
         input.shouldHave(Condition.attribute(attribute, value));
+        return this;
+    }
+
+    @Step("Загрузка файла {file}")
+    public Input uploadFile(File file) {
+        input.shouldBe(Condition.visible).uploadFile(file); // Загрузка файла
         return this;
     }
 }
