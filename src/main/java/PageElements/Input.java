@@ -32,6 +32,7 @@ public class Input {
         return this;
     }
 
+    @Step("Accept value")
     public Input sendConfirmValue() {
         input.sendKeys(Keys.ENTER);
         return this;
@@ -47,5 +48,10 @@ public class Input {
     public Input uploadFile(File file) {
         input.shouldBe(Condition.visible).uploadFile(file); // Загрузка файла
         return this;
+    }
+
+    @Step("Проверка валидации")
+    public String checkValidate(){
+        return input.getCssValue("border-color");
     }
 }
