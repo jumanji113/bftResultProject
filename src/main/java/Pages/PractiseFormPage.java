@@ -2,6 +2,7 @@ package Pages;
 
 import PageElements.*;
 import io.qameta.allure.Step;
+import org.junit.jupiter.api.Assertions;
 
 import java.io.File;
 
@@ -92,7 +93,7 @@ public class PractiseFormPage {
         return this;
     }
 
-    @Step("Загрузка файла {file}")
+    @Step("Загрузка файла {FILE}")
     public PractiseFormPage uploadFileForm() {
         fileInput
                 .scrollTo()
@@ -121,8 +122,20 @@ public class PractiseFormPage {
     }
 
     @Step("Нажатие кнопки подтверждения данных")
-    public Modal submitForm(){
-        submitButton.clickButton();
-        return page(Modal.class);
+    public PractiseFormPage submitForm(){
+        submitButton.scrollToButton()
+                .clickButton();
+        return this;
+    }
+
+    @Step("Проверка обязательных полей")
+    public PractiseFormPage testValidation(){
+        String borderColorFirstName = $x("//input[@id='firstName']").getCssValue("border-color");
+        String borderColorLastName = $x("//input[@id='lastName']").getCssValue("border-color");
+        String borderColorMobile = $x("//input[@id='userNumber']").getCssValue("border-color");
+        Assertions.assertEquals("rgb(206, 212, 218)", borderColorFirstName);
+        Assertions.assertEquals("rgb(206, 212, 218)", borderColorLastName);
+        Assertions.assertEquals("rgb(206, 212, 218)", borderColorMobile);
+        return this;
     }
 }
