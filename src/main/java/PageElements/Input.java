@@ -21,7 +21,14 @@ public class Input {
     public Input setInputValue(String value) {
         input.shouldBe(Condition.visible).clear();
         input.shouldHave(Condition.empty);
-        input.shouldBe(Condition.visible).setValue(value);
+        input.shouldBe(Condition.visible)
+                .setValue(value);
+        return this;
+    }
+
+    @Step("Прокрутка к нужному элементу")
+    public Input scrollTo(){
+        input.scrollTo();
         return this;
     }
 

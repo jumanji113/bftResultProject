@@ -12,7 +12,7 @@ public class PractiseFormPage {
     private static final String NAME = "Alexey";
     private static final String LAST_NAME = "Yudin";
     private static final String MAIL = "a.yudin@yandex.ru";
-    private static final String PHONE = "89997651255";
+    private static final String PHONE = "8999765125";
     private static final String ADDRESS = "Moscow";
     private static final File FILE = new File("src/test/resources/gorizont.jpg");
 
@@ -33,7 +33,7 @@ public class PractiseFormPage {
             new Button("//div[@class=' css-1wy0on6']//div[@class=' css-tlfecz-indicatorContainer'][1]");
     private final Button buttonSelectCity = new Button("//div[text()='Select City']");
     private final Button buttonCityKarnalSelect = new Button("//div[text()='Karnal']");
-    private final Button submitButton = new Button("//button[id()='submit']");
+    private final Button submitButton = new Button("//button[@id='submit']");
 
     @Step("Открытие страницы")
     public PractiseFormPage openPage() {
@@ -57,7 +57,9 @@ public class PractiseFormPage {
 
     @Step("Заполнение поля subject")
     public PractiseFormPage setMathSubject() {
-        subjectInput.setInputValue("Maths").sendConfirmValue();
+        subjectInput
+                .scrollTo()
+                .setInputValue("Maths").sendConfirmValue();
         return this;
     }
 
@@ -84,13 +86,17 @@ public class PractiseFormPage {
 
     @Step("Выбор хобби {hobby}")
     public PractiseFormPage setHobby(String hobby) {
-        new Button("//label[text()='" + hobby + "']").clickButton();
+        new Button("//label[text()='" + hobby + "']")
+                .scrollToButton()
+                .clickButton();
         return this;
     }
 
     @Step("Загрузка файла {file}")
     public PractiseFormPage uploadFileForm() {
-        fileInput.uploadFile(FILE);
+        fileInput
+                .scrollTo()
+                .uploadFile(FILE);
         return this;
     }
 
