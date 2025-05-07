@@ -20,6 +20,12 @@ public class Button {
         return this;
     }
 
+    @Step("Скроллим до элемента")
+    public Button scrollToButton() {
+        button.scrollTo();
+        return this;
+    }
+
     @Step("Проверка, что кнопка активна")
     public boolean isEnabled() {
         return button.is(Condition.enabled);
