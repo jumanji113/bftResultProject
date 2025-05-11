@@ -11,6 +11,7 @@ public abstract class BaseTest {
 
     @BeforeAll
     public static void setUp() {
+
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
                 .screenshots(true) // Включение скриншотов в Allure
                 .savePageSource(true));
