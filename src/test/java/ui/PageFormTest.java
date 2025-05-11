@@ -3,10 +3,12 @@ package ui;
 import Pages.Modal;
 import Pages.PractiseFormPage;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+@Tag("UI")
 public class PageFormTest extends BaseTest {
 
     private static final String MONTH = "May";
