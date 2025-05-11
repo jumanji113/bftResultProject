@@ -7,6 +7,7 @@ import io.restassured.http.ContentType;
 import listeners.CustomTpl;
 import models.Book;
 import models.Bookingdates;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,9 +33,9 @@ public class bookApiTests {
     public void positiveCreateBookCheckStatus() {
         Bookingdates bookingdates = new Bookingdates("2018-01-01", "2019-01-01");
         Book book = Book.builder()
-                .additionalneeds("BreakFast33")
-                .firstname("Alex32")
-                .lastname("Yudin")
+                .additionalneeds("BreakFast" + random.nextInt(1000))
+                .firstname("Alex" + random.nextInt(1000))
+                .lastname("Yudin" + random.nextInt(1000))
                 .totalprice(400)
                 .bookingdates(bookingdates)
                 .depositpaid(true)
@@ -47,7 +48,24 @@ public class bookApiTests {
                 .extract()
                 .jsonPath()
                 .getInt("bookingid");
-        System.out.println(bookId);
+        Assertions.assertNotNull(bookId);
+    }
+
+    @Test
+    @DisplayName("проверка создания книги и получения статуса 200")
+    public void negativeCreateBookCheckStatus() {
+        Book book = Book.builder()
+                .additionalneeds("BreakFast" + random.nextInt(1000))
+                .firstname("Alex" + random.nextInt(1000))
+                .lastname("Yudin" + random.nextInt(1000))
+                .totalprice(400)
+                .build();
+        given().contentType(ContentType.JSON)
+                .body(book)
+                .post("/booking")
+                .then()
+                .body(equalTo("Internal Server Error"))
+                .statusCode(500);
     }
 
     @Test
@@ -83,9 +101,13 @@ public class bookApiTests {
                 .jsonPath()
                 .getInt("bookingid");
 
-        given().get("/booking/" + bookId)
+        Book bookActual = given().get("/booking/" + bookId)
                 .then()
-                .statusCode(200);
+                .statusCode(200)
+                .extract()
+                .as(Book.class);
+        Assertions.assertEquals(book.getAdditionalneeds(), bookActual.getAdditionalneeds());
+        Assertions.assertEquals(book.getTotalprice(), bookActual.getTotalprice());
     }
 
 }
