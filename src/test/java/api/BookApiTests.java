@@ -235,7 +235,7 @@ public class BookApiTests {
 
     @Test
     @Tag("NegativeApi")
-    @DisplayName("Негативный тест на удаление книги")
+    @DisplayName("Негативный тест на изменение данных книги")
     public void negativeUpdateBook(){
         Bookingdates bookingdates = new Bookingdates("2018-01-01", "2019-01-01");
         AuthAdmin authAdmin =
