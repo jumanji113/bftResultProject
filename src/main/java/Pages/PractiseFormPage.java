@@ -1,6 +1,8 @@
 package Pages;
 
 import PageElements.*;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 
@@ -130,12 +132,22 @@ public class PractiseFormPage {
 
     @Step("Проверка обязательных полей")
     public PractiseFormPage testValidation(){
-        String borderColorFirstName = $x("//input[@id='firstName']").getCssValue("border-color");
-        String borderColorLastName = $x("//input[@id='lastName']").getCssValue("border-color");
-        String borderColorMobile = $x("//input[@id='userNumber']").getCssValue("border-color");
-        Assertions.assertEquals("rgb(206, 212, 218)", borderColorFirstName);
-        Assertions.assertEquals("rgb(206, 212, 218)", borderColorLastName);
-        Assertions.assertEquals("rgb(206, 212, 218)", borderColorMobile);
+        String borderColorFirstName = $x("//input[@id='firstName']")
+                .scrollTo()
+                .shouldBe(Condition.cssValue("border-color","rgb(220, 53, 69)"))
+                .getCssValue("border-color");
+        String borderColorLastName = $x("//input[@id='lastName']")
+                .scrollTo()
+                .shouldBe(Condition.cssValue("border-color","rgb(220, 53, 69)"))
+                .getCssValue("border-color");
+        String borderColorMobile = $x("//input[@id='userNumber']")
+                .scrollTo()
+                .shouldBe(Condition.cssValue("border-color","rgb(220, 53, 69)"
+                ))
+                .getCssValue("border-color");
+        Assertions.assertEquals("rgb(220, 53, 69)" , borderColorFirstName);
+        Assertions.assertEquals("rgb(220, 53, 69)", borderColorLastName);
+        Assertions.assertEquals("rgb(220, 53, 69)", borderColorMobile);
         return this;
     }
 }
